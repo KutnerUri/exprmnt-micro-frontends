@@ -2,11 +2,14 @@ import { ReactNode } from "react";
 import { styled } from "styled-components";
 import { MicroFrontEnd } from "../../infra/blueprint";
 import { Product } from "../../entities/product";
-import { cartItems } from "../../mocks/products";
+import { mocked_cartItems } from "../../mocks/products";
 
 export const cartMfe: MicroFrontEnd = {
   name: "cart",
   render: ({ children }: { children: ReactNode }) => <Cart />,
+  elements: {
+    badge: CartBadge,
+  },
 };
 
 const CartList = styled.div`
@@ -19,7 +22,7 @@ function Cart() {
   return (
     <CartList>
       <h2>Cart</h2>
-      {cartItems.map((product) => (
+      {mocked_cartItems.map((product) => (
         <CartItem key={product.id} product={product} />
       ))}
     </CartList>
@@ -38,4 +41,12 @@ function CartItem({ product }: { product: Product }) {
       {product.name} - <i>{product.price}$</i>
     </CartCard>
   );
+}
+
+const CartButton = styled.button`
+
+`
+
+function CartBadge() {
+  return <CartButton>3 🛒</CartButton>;
 }

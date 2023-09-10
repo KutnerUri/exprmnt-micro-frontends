@@ -1,12 +1,5 @@
-export type BluePrintNode = {
-  /** plugin type */
-  plugin: string;
-  /** sub element in the plugin */
-  element?: string;
-  children?: string | BluePrintNode[];
-  config?: object;
-  slot?: Record<string, BluePrintNode>;
-};
+import mapValues from "lodash.mapvalues";
+import type { BluePrintNode } from "./bluePrintNode";
 
 // mocked logger
 const logger = console;
@@ -14,7 +7,7 @@ const logger = console;
 export type MfeRenderProps = {
   children: React.ReactNode;
   config?: object;
-  slots?: Map<string, React.ReactNode>;
+  slots?: Record<string, React.ReactNode>;
 };
 
 export type MfeRenderer = (
@@ -27,11 +20,24 @@ export type MicroFrontEnd = {
   elements?: Record<string, MfeRenderer>;
 };
 
+export function blueprintToJsx(
+  children: BluePrintNode | BluePrintNode[] | string | undefined,
+  plugins: Map<string, MicroFrontEnd>
+) {
+  if (typeof children === "undefined") return null;
+  if (typeof children === "string") return children;
+
+  if (Array.isArray(children))
+    return children.map((child) => blueprintNodeToJsx(child, plugins));
+
+  return blueprintNodeToJsx(children, plugins);
+}
+
 function blueprintNodeToJsx(
   blueprint: BluePrintNode,
   plugins: Map<string, MicroFrontEnd>
 ) {
-  const { plugin: pluginName, config, slot } = blueprint;
+  const { plugin: pluginName, config } = blueprint;
   const renderer = _getRenderer(plugins, pluginName, blueprint.element);
   if (!renderer) {
     const reportName = blueprint.element
@@ -42,7 +48,11 @@ function blueprintNodeToJsx(
   }
 
   const children = blueprintToJsx(blueprint.children, plugins);
-  const jsx = renderer({ children, config });
+  const slots = blueprint.slots
+    ? mapValues(blueprint.slots, (x) => blueprintToJsx(x, plugins))
+    : undefined;
+
+  const jsx = renderer({ children, config, slots });
 
   return jsx;
 }
@@ -57,17 +67,4 @@ function _getRenderer(
 
   if (!elementName) return plugin.render;
   return plugin.elements?.[elementName] ?? undefined;
-}
-
-export function blueprintToJsx(
-  children: BluePrintNode | BluePrintNode[] | string | undefined,
-  plugins: Map<string, MicroFrontEnd>
-) {
-  if (typeof children === "undefined") return null;
-  if (typeof children === "string") return children;
-
-  if (Array.isArray(children))
-    return children.map((child) => blueprintNodeToJsx(child, plugins));
-
-  return blueprintNodeToJsx(children, plugins);
 }

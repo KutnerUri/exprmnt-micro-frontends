@@ -16,13 +16,30 @@ const headerPlugin: MicroFrontEnd = {
 };
 const splitPlugin: MicroFrontEnd = {
   name: "split",
-  render: ({ children }: { children: ReactNode }) => {
+  render: ({ children }) => {
     return <div>{children}</div>;
   },
 };
+const slottedPlugin: MicroFrontEnd = {
+  name: "slotted",
+  render: ({ slots = {} }) => {
+    const { left = null, right = null } = slots;
+    console.log("slots", slots);
+
+    return (
+      <div>
+        {left}
+        <span>split</span>
+        {right}
+      </div>
+    );
+  },
+};
+
 const plugins = new Map([
   ["header", headerPlugin],
   ["split", splitPlugin],
+  ["slotted", slottedPlugin],
 ]);
 
 describe("blueprintToJsx", () => {
@@ -93,6 +110,40 @@ describe("blueprintToJsx", () => {
       <div>
         <h1>first child</h1>
         <h2>second child</h2>
+      </div>
+    );
+  });
+
+  // fails because of internal representation within React
+  // slots are rendered in different functions and therefore the internal "owner" is different
+  // this is a limitation of the current implementation
+  it.skip("should render slots", () => {
+    const blueprint = {
+      plugin: "slotted",
+      slots: {
+        left: [
+          {
+            plugin: "header",
+            children: "pre child",
+          },
+        ],
+        right: [
+          {
+            plugin: "header",
+            element: "h2",
+            children: "post child",
+          },
+        ],
+      },
+    };
+
+    const result = blueprintToJsx(blueprint, plugins);
+
+    expect(result).toEqual(
+      <div>
+        <h1>pre child</h1>
+        <span>split</span>
+        <h2>post child</h2>
       </div>
     );
   });

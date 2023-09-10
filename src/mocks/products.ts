@@ -15,7 +15,7 @@ const product10: Product = {
   price: 120,
 };
 
-export const searchResults: Product[] = [
+export const mocked_searchResults: Product[] = [
   product1,
   product2,
   product3,
@@ -28,4 +28,4 @@ export const searchResults: Product[] = [
   product10,
 ];
 
-export const cartItems: Product[] = [product1, product4, product8];
+export const mocked_cartItems: Product[] = [product1, product4, product8];

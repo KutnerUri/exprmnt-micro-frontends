@@ -1,24 +1,11 @@
 import styled from "styled-components";
 import type { Product } from "../../entities/product";
 import type { MicroFrontEnd } from "../../infra/blueprint";
-
-// todo - get from server
-const products: Product[] = [
-  {
-    id: "1",
-    name: "product 1",
-    price: 100,
-  },
-  {
-    id: "2",
-    name: "product 2",
-    price: 200,
-  },
-];
+import { mocked_searchResults } from "../../mocks/products";
 
 export const galleryMfe: MicroFrontEnd = {
   name: "items",
-  render: () => <ProductGallery />,
+  render: ({ slots = {} }) => <ProductGallery badges={slots.badges} />,
 };
 
 const Grid = styled.div`
@@ -34,12 +21,17 @@ const Card = styled.div`
   border-radius: 4px;
 `;
 
-function ProductGallery() {
+const Badges = styled.div`
+  float: right;
+`;
+
+function ProductGallery({ badges }: { badges?: React.ReactNode }) {
   return (
     <div>
+      <Badges>{badges}</Badges>
       <h2>Items</h2>
       <Grid>
-        {products.map((product) => (
+        {mocked_searchResults.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </Grid>

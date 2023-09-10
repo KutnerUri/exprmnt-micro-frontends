@@ -18,9 +18,9 @@
 - [ ] cart plugin
   - [v] mock data (images, text, prices)
   - [v] basic implementation
-- [ ] gallery plugin
+- [v] gallery plugin
   - [v] mock data (images, text, prices)
-  - [ ] gallery slot
+  - [v] gallery slot
 - [v] mfe elements
 - [ ] cart context
   - [ ] top level context for the app
@@ -30,6 +30,10 @@
 - [ ] dynamic imports
 
 lezdoit!
+
+cleanup:
+
+- [ ] rename "items" to "gallery"
 
 bonus features:
 

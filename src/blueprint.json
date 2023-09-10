@@ -10,8 +10,7 @@
           "plugin": "items",
           "slots": {
             "badges": [{ "plugin": "cart", "element": "badge" }]
-          },
-          "config": { "header": [{ "plugin": "cart", "element": "badge" }] }
+          }
         },
         { "plugin": "cart" }
       ]
