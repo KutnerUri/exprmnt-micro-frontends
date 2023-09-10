@@ -55,6 +55,11 @@ function ProductGallery({ badges }: { badges?: React.ReactNode }) {
   );
 }
 
+const Actions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 function ProductCard({ product }: { product: Product }) {
   const cart = useCart();
   const isCartOnline = !!cart;
@@ -67,19 +72,21 @@ function ProductCard({ product }: { product: Product }) {
         <i>{product.price}$</i>
       </div>
       <br />
-      {!isCartOnline && <button disabled>add to cart</button>}
-      {isCartOnline && !isInCart && (
-        <button
-          onClick={() => {
-            cart?.addItem(product);
-          }}
-        >
-          add to cart
-        </button>
-      )}
-      {isCartOnline && isInCart && (
-        <button onClick={() => cart.removeItem(product.id)}>remove</button>
-      )}
+      <Actions>
+        {!isCartOnline && <button disabled>add to cart</button>}
+        {isCartOnline && !isInCart && (
+          <button
+            onClick={() => {
+              cart?.addItem(product);
+            }}
+          >
+            add to cart
+          </button>
+        )}
+        {isCartOnline && isInCart && (
+          <button onClick={() => cart.removeItem(product.id)}>remove</button>
+        )}
+      </Actions>
     </Card>
   );
 }

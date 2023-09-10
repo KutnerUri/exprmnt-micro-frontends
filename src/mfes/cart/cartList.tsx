@@ -16,22 +16,59 @@ export function CartList() {
       {!cart && <div>Loading...</div>}
       {!!cart &&
         cart.items.map((product) => (
-          <CartItem key={product.id} product={product} />
+          <CartItem
+            key={product.id}
+            product={product}
+            onRemove={() => cart.removeItem(product.id)}
+          />
         ))}
     </CartContainer>
   );
 }
 
 const CartCard = styled.div`
+  display: flex;
+  justify-content: space-between;
+
   border: 1px solid gray;
   padding: 0.5em;
   border-radius: 4px;
+
+  :nth-child(2) {
+    display: none;
+  }
+  &:hover > :nth-child(2) {
+    display: inline-block;
+  }
 `;
 
-function CartItem({ product }: { product: Product }) {
+const IconButton = styled.button`
+  background: rgba(0, 0, 0, 0.09);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.15);
+  }
+  &:active {
+    background: rgba(0, 0, 0, 0.23);
+  }
+`;
+
+function CartItem({
+  product,
+  onRemove,
+}: {
+  product: Product;
+  onRemove?: () => void;
+}) {
   return (
     <CartCard>
-      {product.name} - <i>{product.price}$</i>
+      <span>
+        {product.name} - <i>{product.price}$</i>
+      </span>
+      <IconButton onClick={onRemove}>×</IconButton>
     </CartCard>
   );
 }
