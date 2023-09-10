@@ -13,9 +13,11 @@ export function CartList() {
   return (
     <CartContainer>
       <h2>Cart</h2>
-      {cart?.items.map((product) => (
-        <CartItem key={product.id} product={product} />
-      ))}
+      {!cart && <div>Loading...</div>}
+      {!!cart &&
+        cart.items.map((product) => (
+          <CartItem key={product.id} product={product} />
+        ))}
     </CartContainer>
   );
 }

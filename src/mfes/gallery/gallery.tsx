@@ -3,6 +3,7 @@ import type { Product } from "../../entities/product";
 import type { MicroFrontEnd } from "../../infra/blueprint";
 import { mocked_searchResults } from "../../mocks/products";
 import { useCart } from "../cartStore";
+import { useMockedRequest } from "../../mocks/network-request";
 
 export const galleryMfe: MicroFrontEnd = {
   name: "gallery",
@@ -13,7 +14,10 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1em;
-  max-width: 700px;
+`;
+
+const Container = styled.div`
+  max-width: 1200px;
 `;
 
 const Card = styled.div`
@@ -22,21 +26,32 @@ const Card = styled.div`
   border-radius: 4px;
 `;
 
-const Badges = styled.div`
-  float: right;
+const TitleLine = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
+const Badges = styled.div``;
+
 function ProductGallery({ badges }: { badges?: React.ReactNode }) {
+  const products = useMockedRequest(mocked_searchResults);
+
   return (
-    <div>
-      <Badges>{badges}</Badges>
-      <h2>Items</h2>
-      <Grid>
-        {mocked_searchResults.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </Grid>
-    </div>
+    <Container>
+      <TitleLine>
+        <h2>Items</h2>
+        <Badges>{badges}</Badges>
+      </TitleLine>
+      {!products && <div>Loading...</div>}
+      {products && (
+        <Grid>
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </Grid>
+      )}
+    </Container>
   );
 }
 
@@ -51,6 +66,7 @@ function ProductCard({ product }: { product: Product }) {
       <div>
         <i>{product.price}</i>
       </div>
+      {!isCartOnline && <button disabled>add to cart</button>}
       {isCartOnline && !isInCart && (
         <button
           onClick={() => {

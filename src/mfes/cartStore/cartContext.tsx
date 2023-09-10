@@ -2,10 +2,13 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
 import type { Product } from "../../entities/product";
+import { useMockedRequest } from "../../mocks/network-request";
+import { mocked_cartItems } from "../../mocks/products";
 
 type CartItem = Product;
 type CartState = {
@@ -17,13 +20,9 @@ type CartState = {
 const cartCtx = createContext<CartState | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: "1",
-      name: "Laptop",
-      price: 1000,
-    },
-  ]);
+  const loadedItems = useMockedRequest(mocked_cartItems);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
   const addItem = useCallback((item: CartItem) => {
     setCartItems((items) => [...items, item]);
   }, []);
@@ -31,10 +30,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setCartItems((items) => items.filter((item) => item.id !== id));
   }, []);
 
-  const state = useMemo(
-    () => ({ items: cartItems, addItem, removeItem }),
-    [cartItems]
-  );
+  useEffect(() => {
+    if (loadedItems) setCartItems(loadedItems);
+  }, loadedItems);
+
+  const state = useMemo(() => {
+    if (!loadedItems) return undefined;
+    return { items: cartItems, addItem, removeItem };
+  }, [cartItems]);
 
   return <cartCtx.Provider value={state}>{children}</cartCtx.Provider>;
 }
