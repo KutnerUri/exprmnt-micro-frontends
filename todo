@@ -8,7 +8,7 @@
 
 ## Todo
 
-- [ ] orchestrator
+- [v] orchestrator
   - [v] build jsx
   - [v] tests
 - app
@@ -24,10 +24,7 @@
 - [v] mfe elements
 - [v] cart context
   - [v] top level context for the app
-- [ ] apis
-  - [ ] cart api (mocks)
-  - [ ] gallery api (mocks)
-- [ ] dynamic imports
+- [v] mocked apis
 
 lezdoit!
 
@@ -38,7 +35,11 @@ cleanup:
 bonus features:
 
 - [ ] error boundary
-- [ ] lazy loading
+- [ ] apis
+  - [ ] cart api (mocks)
+  - [ ] gallery api (mocks)
+- [ ] dynamic imports
+  - [ ] lazy loading
 - [ ] basic styling, and or MUI
   - [ ] css vars
 - [ ] basic responsive behavior
