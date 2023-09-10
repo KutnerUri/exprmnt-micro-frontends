@@ -81,7 +81,7 @@ For example, our task app will look like this:
     "config": { "ratio": [80, 20] },
     "children": [
       {
-        "plugin": "items",
+        "plugin": "gallery",
         "slots": {
           "badges": [{ "plugin": "cart", "element": "badge" }]
         },

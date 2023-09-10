@@ -22,8 +22,8 @@
   - [v] mock data (images, text, prices)
   - [v] gallery slot
 - [v] mfe elements
-- [ ] cart context
-  - [ ] top level context for the app
+- [v] cart context
+  - [v] top level context for the app
 - [ ] apis
   - [ ] cart api (mocks)
   - [ ] gallery api (mocks)
@@ -33,7 +33,7 @@ lezdoit!
 
 cleanup:
 
-- [ ] rename "items" to "gallery"
+- [v] rename "items" to "gallery"
 
 bonus features:
 

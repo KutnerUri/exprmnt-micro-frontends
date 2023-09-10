@@ -7,7 +7,7 @@ import { builtinPlugins } from "./mfes/plugins";
 
 export const plugins = new Map([
   ...builtinPlugins,
-  ["items", galleryMfe],
+  ["gallery", galleryMfe],
   ["cart", cartMfe],
   ["cart-store", cartStoreMfe],
 ]);

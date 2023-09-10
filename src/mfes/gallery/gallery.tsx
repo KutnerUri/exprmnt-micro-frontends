@@ -5,7 +5,7 @@ import { mocked_searchResults } from "../../mocks/products";
 import { useCart } from "../cartStore";
 
 export const galleryMfe: MicroFrontEnd = {
-  name: "items",
+  name: "gallery",
   render: ({ slots = {} }) => <ProductGallery badges={slots.badges} />,
 };
 
