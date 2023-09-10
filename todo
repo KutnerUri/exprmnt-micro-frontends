@@ -21,6 +21,7 @@
 - [ ] gallery plugin
   - [v] mock data (images, text, prices)
   - [ ] gallery slot
+- [v] mfe elements
 - [ ] cart context
   - [ ] top level context for the app
 - [ ] apis

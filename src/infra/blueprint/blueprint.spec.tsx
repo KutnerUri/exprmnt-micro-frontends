@@ -8,6 +8,11 @@ const headerPlugin: MicroFrontEnd = {
   render: ({ children }: { children: ReactNode }) => {
     return <h1>{children}</h1>;
   },
+  elements: {
+    h2: ({ children }: { children: ReactNode }) => {
+      return <h2>{children}</h2>;
+    },
+  },
 };
 const splitPlugin: MicroFrontEnd = {
   name: "split",
@@ -63,6 +68,31 @@ describe("blueprintToJsx", () => {
       <div>
         <h1>first child</h1>
         <h1>second child</h1>
+      </div>
+    );
+  });
+
+  it("should render mfe element (sub-module)", () => {
+    const blueprint = {
+      plugin: "split",
+      children: [
+        {
+          plugin: "header",
+          children: "first child",
+        },
+        {
+          plugin: "header",
+          children: "second child",
+          element: "h2",
+        },
+      ],
+    };
+    const result = blueprintToJsx(blueprint, plugins);
+
+    expect(result).toEqual(
+      <div>
+        <h1>first child</h1>
+        <h2>second child</h2>
       </div>
     );
   });
