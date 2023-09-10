@@ -1,8 +1,6 @@
 import mapValues from "lodash.mapvalues";
+import { logger } from "../logger";
 import type { BluePrintNode } from "./bluePrintNode";
-
-// mocked logger
-const logger = console;
 
 export type MfeRenderProps = {
   children: React.ReactNode;
