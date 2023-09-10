@@ -8,6 +8,9 @@ export type BluePrintNode = {
   slot?: Record<string, BluePrintNode>;
 };
 
+// mocked logger
+const logger = console;
+
 export type MfeRenderProps = {
   children: React.ReactNode;
   config?: object;
@@ -20,7 +23,6 @@ export type MfeRenderer = (
 
 export type MicroFrontEnd = {
   name: string;
-  // TODO - review
   render: MfeRenderer;
   elements?: Record<string, MfeRenderer>;
 };
@@ -31,7 +33,13 @@ function blueprintNodeToJsx(
 ) {
   const { plugin: pluginName, config, slot } = blueprint;
   const renderer = _getRenderer(plugins, pluginName, blueprint.element);
-  if (!renderer) return null;
+  if (!renderer) {
+    const reportName = blueprint.element
+      ? `${pluginName}.${blueprint.element}`
+      : pluginName;
+    logger.error(`blueprint parsing error: plugin ${reportName} not found`);
+    return null;
+  }
 
   const children = blueprintToJsx(blueprint.children, plugins);
   const jsx = renderer({ children, config });
