@@ -1,3 +1,8 @@
+This app is a proof of concept showcasing how we can split our code into Micro Front Ends.  
+In this solution, we use React as the main rendering engine, and compose applets using a template file, named the "blueprint".
+
+## What is a "micro front end"?
+
 We can say an app is made out of micro-front ends when it is composed of multiple apps, each isolated from the others, and each responsible for a specific part of the app. Ideally, each micro-frontend is developed by a different team, and can be deployed independently, though they might need to communicate with each other through messages or a shared state.
 
 In spite of this isolation, an application owner still orchestrates his/her app, and decides which micro-frontends to use, and how to compose them.
@@ -14,7 +19,7 @@ Bonus features:
 - Caching: cache the composed orchestration on a CDN, and load it from there. This will keep the loading time and time-too-interaction low.
 - Server-side rendering
 
-Possible technologies:
+## Possible technologies:
 
 - Webpack's **Module Federation**. This is a webpack plugin that allows us to load modules dynamically from a remote server. This is a great solution, but it's still in beta, and requires a lot of configuration. It also locks us into Webpack, a Javascript based bundler which is extremely popular and powerful, but also very slow and complicated, reaching the end of its life cycle with newer bundlers like esbuild and turbopack slowly taking its place.
 - **Web Components**. This is a web standard that allows us to create isolated HTML sections. It is somewhat widely supported, and is polyfill-able for older browsers.
@@ -24,7 +29,9 @@ Possible technologies:
 - React features that will facilitate dynamic-ness - context, lazy, suspense, error boundaries.
 
 ## Micro frontends
+
 In a micro front end architecture, several small applets are composed together to create a larger app.
+
 - Each applet is self contained, with its own development and deployment process.
 - Applets are loaded dynamically, so they can be patched or disabled without having the change the main app.
 
@@ -117,6 +124,6 @@ function Orchestrator() {
 - Assume a single page. Adding more pages should be as simple as making a blueprint per page, but will be a little bit more complicated, requiring virtual router and custom link components, "sticky" plugins, etc.
 - Assume a single framework - React. We can and should isolate each plugin to its own render context, probably Web Components, allowing us to use new technologies and frameworks in the future, but for now we'll use a single render using React.
 - Communicate between plugins using react context. This greatly simplifies state and updates between plugins, though we should set up a more robust cross-framework solution in the future, like a message bus.
-- Assume a single version per micro front end. We could support multiple versions, as well as singletons later on. 
+- Assume a single version per micro front end. We could support multiple versions, as well as singletons later on.
 
 All these simplifications can be expanded later on, if needed, in a bigger more complete solution, after having a working prototype that we can get feedback on.
