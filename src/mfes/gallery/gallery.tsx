@@ -64,8 +64,9 @@ function ProductCard({ product }: { product: Product }) {
     <Card>
       <div>{product.name}</div>
       <div>
-        <i>{product.price}</i>
+        <i>{product.price}$</i>
       </div>
+      <br />
       {!isCartOnline && <button disabled>add to cart</button>}
       {isCartOnline && !isInCart && (
         <button

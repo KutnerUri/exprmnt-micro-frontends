@@ -8,33 +8,33 @@
 
 ## Todo
 
-- [v] orchestrator
-  - [v] build jsx
-  - [v] tests
+- [x] orchestrator
+  - [x] build jsx
+  - [x] tests
 - app
-  - [v] hard-coded blueprint
-  - [v] hard-coded plugins
-  - [v] render
-- [ ] cart plugin
-  - [v] mock data (images, text, prices)
-  - [v] basic implementation
-- [v] gallery plugin
-  - [v] mock data (images, text, prices)
-  - [v] gallery slot
-- [v] mfe elements
-- [v] cart context
-  - [v] top level context for the app
-- [v] mocked apis
+  - [x] hard-coded blueprint
+  - [x] hard-coded plugins
+  - [x] render
+- [x] cart plugin
+  - [x] mock data (images, text, prices)
+  - [x] basic implementation
+- [x] gallery plugin
+  - [x] mock data (images, text, prices)
+  - [x] gallery slot
+- [x] mfe elements
+- [x] cart context
+  - [x] top level context for the app
+- [x] mocked apis
 
 lezdoit!
 
 cleanup:
 
-- [v] rename "items" to "gallery"
+- [x] rename "items" to "gallery"
 
 bonus features:
 
-- [ ] error boundary
+- [x] error boundary
 - [ ] apis
   - [ ] cart api (mocks)
   - [ ] gallery api (mocks)
