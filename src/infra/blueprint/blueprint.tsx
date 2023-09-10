@@ -1,4 +1,5 @@
 import mapValues from "lodash.mapvalues";
+import { ErrorBoundary } from "react-error-boundary";
 import { logger } from "../logger";
 import type { BluePrintNode } from "./bluePrintNode";
 
@@ -20,7 +21,8 @@ export type MicroFrontEnd = {
 
 export function blueprintToJsx(
   children: BluePrintNode | BluePrintNode[] | string | undefined,
-  plugins: Map<string, MicroFrontEnd>
+  plugins: Map<string, MicroFrontEnd>,
+  name: string = "root"
 ) {
   if (typeof children === "undefined") return null;
   if (typeof children === "string") return children;
@@ -28,7 +30,11 @@ export function blueprintToJsx(
   if (Array.isArray(children))
     return children.map((child) => blueprintNodeToJsx(child, plugins));
 
-  return blueprintNodeToJsx(children, plugins);
+  return (
+    <ErrorBoundary fallback={<div>error fallback</div>}>
+      <>{blueprintNodeToJsx(children, plugins)}</>
+    </ErrorBoundary>
+  );
 }
 
 function blueprintNodeToJsx(
@@ -37,21 +43,21 @@ function blueprintNodeToJsx(
 ) {
   const { plugin: pluginName, config } = blueprint;
   const renderer = _getRenderer(plugins, pluginName, blueprint.element);
+  const reportName = blueprint.element
+    ? `${pluginName}.${blueprint.element}`
+    : pluginName;
+
   if (!renderer) {
-    const reportName = blueprint.element
-      ? `${pluginName}.${blueprint.element}`
-      : pluginName;
     logger.error(`blueprint parsing error: plugin ${reportName} not found`);
     return null;
   }
 
-  const children = blueprintToJsx(blueprint.children, plugins);
+  const children = blueprintToJsx(blueprint.children, plugins, reportName);
   const slots = blueprint.slots
     ? mapValues(blueprint.slots, (x) => blueprintToJsx(x, plugins))
     : undefined;
 
   const jsx = renderer({ children, config, slots });
-
   return jsx;
 }
 
