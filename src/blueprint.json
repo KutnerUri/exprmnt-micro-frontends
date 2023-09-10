@@ -1,0 +1,20 @@
+{
+  "plugin": "container",
+  "children": [
+    { "plugin": "header", "children": "My Store" },
+    {
+      "plugin": "layout",
+      "config": { "ratio": [80, 20] },
+      "children": [
+        {
+          "plugin": "items",
+          "slots": {
+            "badges": [{ "plugin": "cart", "element": "badge" }]
+          },
+          "config": { "header": [{ "plugin": "cart", "element": "badge" }] }
+        },
+        { "plugin": "cart" }
+      ]
+    }
+  ]
+}

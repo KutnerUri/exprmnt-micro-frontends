@@ -1,0 +1,70 @@
+# Duda Micro-frontends assignments
+
+## Goal:
+
+1. Create an app with micro frontends
+2. The app will show an online store, composed of a host app ("the store"), a product gallery (micro app 1), and a cart (micro app 2).
+3. The host app will own a shared state, where the two sub apps communicate through.
+
+## Todo
+
+- [ ] orchestrator
+  - [v] build jsx
+  - [v] tests
+- app
+  - [v] hard-coded blueprint
+  - [v] hard-coded plugins
+  - [v] render
+- [ ] cart plugin
+  - [v] mock data (images, text, prices)
+  - [v] basic implementation
+  - [ ] (mocked) api
+- [ ] cart context
+  - [ ] top level context for the app
+- [ ] gallery plugin
+  - [v] mock data (images, text, prices)
+  - [ ] (mocked) api
+  - [ ] gallery slot
+- [ ] dynamic imports
+
+lezdoit!
+
+bonus features:
+
+- [ ] error boundary
+- [ ] lazy loading
+- [ ] basic styling, and or MUI
+- [ ] basic responsive behavior
+
+issues:
+
+- [ ] missing react key when rendering children
+
+## Reference
+
+### Entities
+
+- item
+  - price, name, id, (quantity)
+
+### Cart
+
+The cart shows a list of added items.
+The cart has two views: list view, and button view. (maybe even full page view)
+
+- remove item(s) from cart
+- total price
+
+### Gallery
+
+Shows a grid of items
+
+- add item to cart, increase quantity
+- remove (added) item
+
+### ideas:
+
+- each sub-app should be dynamic, so that we could swap them for a different implementation, or turned off completely
+- pages? (discovery page with the gallery, review page with cart alone, purchase page, etc)
+- (bonus) retractable cart
+- (bonus) error boundary and loader for the apps
