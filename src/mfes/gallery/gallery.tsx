@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import styled from "styled-components";
 import type { Product } from "../../entities/product";
 import type { MicroFrontEnd } from "../../infra/blueprint";
@@ -19,9 +18,7 @@ const products: Product[] = [
 
 export const galleryMfe: MicroFrontEnd = {
   name: "items",
-  render: (children: ReactNode) => {
-    return <ProductGallery />;
-  },
+  render: () => <ProductGallery />,
 };
 
 const Grid = styled.div`
@@ -34,6 +31,7 @@ const Grid = styled.div`
 const Card = styled.div`
   border: 1px solid gray;
   padding: 0.5em;
+  border-radius: 4px;
 `;
 
 function ProductGallery() {

@@ -1,16 +1,17 @@
+import { ReactNode } from "react";
 import { MicroFrontEnd, blueprintToJsx } from "./blueprint";
 
 const emptyPlugins = new Map();
 
 const headerPlugin: MicroFrontEnd = {
   name: "header",
-  render: (children, config) => {
+  render: ({ children }: { children: ReactNode }) => {
     return <h1>{children}</h1>;
   },
 };
 const splitPlugin: MicroFrontEnd = {
   name: "split",
-  render: (children, config) => {
+  render: ({ children }: { children: ReactNode }) => {
     return <div>{children}</div>;
   },
 };

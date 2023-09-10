@@ -18,13 +18,14 @@
 - [ ] cart plugin
   - [v] mock data (images, text, prices)
   - [v] basic implementation
-  - [ ] (mocked) api
-- [ ] cart context
-  - [ ] top level context for the app
 - [ ] gallery plugin
   - [v] mock data (images, text, prices)
-  - [ ] (mocked) api
   - [ ] gallery slot
+- [ ] cart context
+  - [ ] top level context for the app
+- [ ] apis
+  - [ ] cart api (mocks)
+  - [ ] gallery api (mocks)
 - [ ] dynamic imports
 
 lezdoit!
@@ -34,6 +35,7 @@ bonus features:
 - [ ] error boundary
 - [ ] lazy loading
 - [ ] basic styling, and or MUI
+  - [ ] css vars
 - [ ] basic responsive behavior
 
 issues:

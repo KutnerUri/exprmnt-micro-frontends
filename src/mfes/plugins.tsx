@@ -1,11 +1,10 @@
 import { ReactNode } from "react";
 import { styled } from "styled-components";
 import { MicroFrontEnd } from "../infra/blueprint";
-import { galleryMfe } from "./gallery/gallery";
 
 const headerPlugin: MicroFrontEnd = {
   name: "header",
-  render: (children: ReactNode) => {
+  render: ({ children }: { children: ReactNode }) => {
     return <h1>{children}</h1>;
   },
 };
@@ -17,7 +16,7 @@ const Layout = styled.div`
 
 const layoutPlugin: MicroFrontEnd = {
   name: "layout",
-  render: (children: ReactNode) => {
+  render: ({ children }: { children: ReactNode }) => {
     return <Layout>{children}</Layout>;
   },
 };
@@ -28,25 +27,13 @@ const Container = styled.div`
 
 const containerPlugin: MicroFrontEnd = {
   name: "container",
-  render: (children: ReactNode) => {
+  render: ({ children }: { children: ReactNode }) => {
     return <Container>{children}</Container>;
   },
 };
 
-const cartPlugin: MicroFrontEnd = {
-  name: "cart",
-  render: (children: ReactNode) => {
-    return <div>here is a cart</div>;
-  },
-};
-const builtinPlugins = [
+export const builtinPlugins = [
   ["container", containerPlugin],
   ["header", headerPlugin],
   ["layout", layoutPlugin],
 ] as const;
-
-export const plugins = new Map([
-  ...builtinPlugins,
-  ["items", galleryMfe],
-  ["cart", cartPlugin],
-]);

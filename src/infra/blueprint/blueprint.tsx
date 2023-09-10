@@ -1,31 +1,54 @@
 export type BluePrintNode = {
+  /** plugin type */
   plugin: string;
+  /** sub element in the plugin */
+  element?: string;
   children?: string | BluePrintNode[];
   config?: object;
+  slot?: Record<string, BluePrintNode>;
 };
+
+export type MfeRenderProps = {
+  children: React.ReactNode;
+  config?: object;
+  slots?: Map<string, React.ReactNode>;
+};
+
+export type MfeRenderer = (
+  props: MfeRenderProps /* targetNode?: HTMLElement */
+) => React.ReactNode;
 
 export type MicroFrontEnd = {
   name: string;
   // TODO - review
-  render: (
-    children: React.ReactNode,
-    config: object | undefined
-  ) => React.ReactNode;
+  render: MfeRenderer;
+  elements?: Record<string, MfeRenderer>;
 };
 
 function blueprintNodeToJsx(
   blueprint: BluePrintNode,
   plugins: Map<string, MicroFrontEnd>
 ) {
-  const { plugin: pluginName, config } = blueprint;
-  const plugin = plugins.get(pluginName);
+  const { plugin: pluginName, config, slot } = blueprint;
+  const renderer = _getRenderer(plugins, pluginName, blueprint.element);
+  if (!renderer) return null;
 
-  if (!plugin) return null;
-
-  const childrenJsx = blueprintToJsx(blueprint.children, plugins);
-  const jsx = plugin.render(childrenJsx, config);
+  const children = blueprintToJsx(blueprint.children, plugins);
+  const jsx = renderer({ children, config });
 
   return jsx;
+}
+
+function _getRenderer(
+  map: Map<string, MicroFrontEnd>,
+  pluginName: string,
+  elementName?: string
+) {
+  const plugin = map.get(pluginName);
+  if (!plugin) return undefined;
+
+  if (!elementName) return plugin.render;
+  return plugin.elements?.[elementName] ?? undefined;
 }
 
 export function blueprintToJsx(
