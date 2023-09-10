@@ -2,6 +2,7 @@ import styled from "styled-components";
 import type { Product } from "../../entities/product";
 import type { MicroFrontEnd } from "../../infra/blueprint";
 import { mocked_searchResults } from "../../mocks/products";
+import { useCart } from "../cartStore";
 
 export const galleryMfe: MicroFrontEnd = {
   name: "items",
@@ -40,14 +41,28 @@ function ProductGallery({ badges }: { badges?: React.ReactNode }) {
 }
 
 function ProductCard({ product }: { product: Product }) {
+  const cart = useCart();
+  const isCartOnline = !!cart;
+  const isInCart = cart?.items.some((item) => item.id === product.id);
+
   return (
     <Card>
       <div>{product.name}</div>
       <div>
         <i>{product.price}</i>
       </div>
-      <button>add to cart</button>
-      {/* <button>remove</button> */}
+      {isCartOnline && !isInCart && (
+        <button
+          onClick={() => {
+            cart?.addItem(product);
+          }}
+        >
+          add to cart
+        </button>
+      )}
+      {isCartOnline && isInCart && (
+        <button onClick={() => cart.removeItem(product.id)}>remove</button>
+      )}
     </Card>
   );
 }

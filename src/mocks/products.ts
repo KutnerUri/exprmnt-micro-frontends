@@ -28,4 +28,4 @@ export const mocked_searchResults: Product[] = [
   product10,
 ];
 
-export const mocked_cartItems: Product[] = [product1, product4, product8];
+export const mocked_cartItems = [product1, product4, product8];
